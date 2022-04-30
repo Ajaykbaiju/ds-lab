@@ -1,0 +1,117 @@
+#include <stdio.h>
+int isempty();
+int isfull();
+void insert(int ,int);
+int gethighestpriority();
+int deletehighespriority();
+void display();
+struct priorityqueue
+{
+    int ele;
+    int pty;
+    
+}pq[5];
+int rear=-1;
+int main()
+{
+    int ch,p,ele;
+    do{
+        printf("1.insert\n2.gethighestpty\n3.ddelte\n4.display\n enter choice\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:if(isfull())
+            printf("full");
+            else
+            {
+                printf("enter number and priority");
+                scanf("%d",&ele);
+                scanf("%d",&p);
+                insert(ele,p);
+                
+            }break;
+            case 2 :
+            if(isempty())
+            printf("empty");
+            else
+            {
+                p=gethighestpriority();
+                printf("%d",p);
+            }break;
+            case 3 :if(isempty())
+            printf("emt]]y");
+            else
+            {
+                ele=deletehighespriority();
+                printf("%d deleted",ele);
+            }break;
+            case 4 : display();
+        }
+    }while(ch!=5);
+    
+}
+int isempty()
+{
+    if(rear==-1)
+    return 1;
+    else 
+    return 0;
+}
+int isfull()
+{
+  if(rear==4)
+  {
+      return 1;
+  }
+  else
+  return 0;
+}
+void insert(int ele,int p)
+{
+    rear=rear+1;
+    pq[rear].ele=ele;
+    pq[rear].pty=p;
+}
+int gethighestpriority()
+{
+    int i,p=-1;
+    if(!isempty()){
+    for(i=0;i<=rear;i++)
+    {
+        if(pq[i].pty>p)
+        p=pq[i].pty;
+    }
+    }return p;
+    
+}
+int deletehighespriority()
+{
+    int i,j,p,ele;
+    p=gethighestpriority();
+    for(i=0;i<=rear;i++)
+    {
+        if(pq[i].pty==p)
+        {
+            ele=pq[i].ele;
+            break;
+        }
+    }
+    if(i<rear)
+    {
+        for(j=1;i<=rear;j++)
+        {
+            pq[j].pty=pq[j+1].pty;
+            pq[j].ele=pq[j+1].ele;
+        }
+    }rear=rear-1;
+    return ele;
+}
+void display()
+{
+    int i;
+    printf("\npriorty queue \n");
+    for(i=0;i<=rear;i++)
+    {
+        printf("element - %d \n priority-%d",pq[i].ele,pq[i].pty);
+    }
+}
